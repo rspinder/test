@@ -1,0 +1,24 @@
+import tableauserverclient as tsc
+
+server_url = "https://10ax.online.tableau.com"
+username = "jfitzgerald@tableau.com"
+password = "XC126U5VmmqR"
+sitename = "jachackdev669200"
+
+credentials = tsc.TableauAuth(username, password, sitename)
+server = tsc.Server(server_url)
+
+with server.auth.sign_in(credentials):
+  print("signed in as " + username )
+
+  project = tsc.ProjectItem("jfitzgerald3458735", "description for fun")
+
+  names = ["chris99", "lee99" "ankit456"]
+  
+  for name in names:
+    project = tsc.ProjectItem(name)
+    server.projects.create(project)
+
+  all_projects, pagination = server.projects.get()
+  for proj in all_projects:
+    print(proj.name)
